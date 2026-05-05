@@ -1,4 +1,4 @@
-Function formatNumber(number = 0) {
+function formatNumber(number = 0) {
   return Number(number || 0)
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -261,8 +261,16 @@ setInterval(async () => {
 
       classifica.forEach(([jid, u], i) => {
         mentions.push(jid);
+
+        // --- AGGIUNTA EURO ---
+        if (!global.db.data.users[jid]) global.db.data.users[jid] = {};
+        let user = global.db.data.users[jid];
+        let premio = premi[i];
+        user.euro = (Number(user.euro) || 0) + premio;
+        // ---------------------
+
         report += `│ ${medaglie[i]} @${jid.split('@')[0]}\n`;
-        report += `│ ✨ ${formatNumber(u.conteggio)} msg ➔ 💰 +${premi[i]}€\n`;
+        report += `│ ✨ ${formatNumber(u.conteggio)} msg ➔ 💰 +${premio}€\n`;
         if (i < classifica.length - 1) report += `│\n`
       });
 
@@ -390,6 +398,11 @@ setInterval(async () => {
         try {
           await global.conn.sendMessage(gid, { text: report, mentions });
         } catch {}
+
+        chats[gid].statsSettimanali = {
+            totali: 0, media: 0, utenti: {}, attiviSettimana: 0,
+            settimana: new Date().toLocaleDateString('it-IT')
+        };
       }
 
       // GRUPPI
@@ -438,6 +451,8 @@ setInterval(async () => {
             await global.conn.sendMessage(gid, { text: report });
           } catch {}
         }
+
+        global.db.data.statsGruppiSettimanali = { totali:0, media:0, gruppi:{}, attiviSettimana:0 };
       }
     }
 
