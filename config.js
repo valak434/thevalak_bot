@@ -61,8 +61,8 @@ global.APIKeys = {
     screenshotone_default: 'varebot',
     tmdb: 'varebot',
     gemini: 'varebot',
-    ocrspace: 'varebot',
-    assemblyai: 'varebot',
+    ocrspace: 'varebot', // Anche qui, se vuoi usare l'OCR, servirà una chiave reale
+    assemblyai: '28d98ad404514d05ad203723e089eb63', // <--- AGGIORNATA QUI
     google: 'varebot',
     googlex: 'varebot',
     googleCX: 'varebot',
@@ -74,6 +74,7 @@ global.APIKeys = {
     sightengine_user: 'varebot',
     sightengine_secret: 'varebot'
 };
+
 
 
 /*⭑⭒━━━✦❘༻🪷 SISTEMA XP/EURO 💸༺❘✦━━━⭒⭑*/
