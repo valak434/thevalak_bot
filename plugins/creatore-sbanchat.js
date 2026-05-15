@@ -1,16 +1,17 @@
-let handler = async (m, { conn }) => {
-if (!(m.chat in global.db.data.chats)) return conn.reply(m.chat, '🎌 *Questo chat non è registrata!*', m, fake)
-let chat = global.db.data.chats[m.chat]
-if (!chat.isBanned) return conn.reply(m.chat, '《★》Il bot non è bannato in questa chat', m, fake)
-chat.isBanned = false
-await conn.reply(m.chat, `《★》BloodBot è stato sbannato in questa chat.`, m, fake)
-}
-handler.help = ['sbanchat'];
-handler.tags = ['creatore'];
-handler.command = ['007sban', 'sbannachat', 'sbanchat']
-handler.rowner = true
-handler.admin = true 
-handler.botAdmin = false
-handler.group = false
+let handler = async (m) => {
+    const allowedNumber = '393701330693@s.whatsapp.net'; // Il tuo numero autorizzato
 
-export default handler
+    if (m.sender !== allowedNumber) {
+        await m.reply('Non hai il permesso di usare questo comando!');
+        return;
+    }
+
+    global.db.data.chats[m.chat].isBanned = false;
+    m.reply('Il bot si è svegliato! ☀️ Di nuovo attivo in questa chat.');
+};
+
+handler.help = ['unbanchat'];
+handler.tags = ['owner'];
+handler.command = /^unbanchat|on$/i;
+handler.rowner = true;
+export default handler;
