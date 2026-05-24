@@ -97,7 +97,7 @@ global.loadDatabase = async function loadDatabase() {
 loadDatabase();
 
 if (global.conns instanceof Array) {
-    console.log(chalk.cyan('Connessioni già inizializzate...'));
+    console.log(chalk.redBright('[ERROR-BOT] Sotto-nodi computazionali già allocati in memoria...'));
 } else {
     global.conns = [];
 }
@@ -132,50 +132,53 @@ const question = (t) => {
 let opzione;
 if (!methodCodeQR && !methodCode && !fs.existsSync(`./${authFile}/creds.json`)) {
     do {
-        // NUOVA PALETTE: CYBER BLUE & PURPLE
-        const color1 = chalk.hex('#00D2FF'); // Cyan
-        const color2 = chalk.hex('#3A7BD5'); // Blue
-        const color3 = chalk.hex('#6A11CB'); // Deep Purple
-        const color4 = chalk.hex('#2575FC'); // Bright Blue
-        const softText = chalk.hex('#AED6F1');
+        // STYLE CALIBRATO: IDENTICO MA DRITTO AL MILLIMETRO
+        const errRed = chalk.hex('#FF2A2A').bold;
+        const errDimRed = chalk.hex('#990000');
+        const errDark = chalk.hex('#444444');
+        const errGray = chalk.hex('#BBBBBB');
+        const errGreen = chalk.hex('#00FF66');
+        const errCyan = chalk.hex('#00E5FF');
 
-        const a = color1('╭━━━━━━━━━━━━━• ✧˚💎 𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙 💠˚✧ •━━━━━━━━━━━━━');
-        const b = color1('╰━━━━━━━━━━━━━• ☾⋆₊✧ 𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙 ✧₊⋆☽ •━━━━━━━━━━━━━');
-        const linea = color2('   ✦━━━━━━✦✦━━━━━━༺💧༻━━━━━━༺💧༻━━━━━━✦✦━━━━━━✦');
-        const sm = chalk.bold.hex('#FFFFFF')('SELEZIONE METODO DI ACCESSO ✦');
-        const qr = color4(' ┌─⭓') + ' ' + chalk.bold.white('1. Scansione con QR Code');
-        const codice = color4(' └─⭓') + ' ' + chalk.bold.white('2. Codice di 8 cifre');
-        const istruzioni = [
-            color4(' ┌─⭓') + softText.italic(' Digita solo il numero corrispondente.'),
-            color4(' └─⭓') + softText.italic(' Premi Invio per confermare.'),
-            softText.italic(''),
-            color1.italic('                   by blood'),
-        ];
-        const prompt = chalk.hex('#00FFCC').bold('\n⌯ Inserisci la tua scelta ---> ');
+        // Bordi fisse di uguale lunghezza per evitare sfasamenti su Termux/Linux
+        const bTop = errRed('◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢ SYSTEM INJECTION GATEWAY ◣◥◣◥◣◥◣◥◣◥◣◥◣◥◣◥◣◥◣◥');
+        const bBot = errRed('◣◥◣◥◣◥◣◥◣◥◣◥◣◥◣◥◣◥◣◥ CORE SYSTEM INITIALIZED ◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢');
+        const line = errDark('—'.repeat(68));
+        
+        const title   = chalk.white.bold('     [!] DETECTED STATUS: INITIALIZATION_MENU_REQUIRED');
+        const option1 = errCyan('     [01] ') + chalk.white('-> CORE_INJECT :') + chalk.bold.white(' VIA QR CODE MATRIX');
+        const option2 = errCyan('     [02] ') + chalk.white('-> HOST_LINK   :') + chalk.bold.white(' VIA PAIRING CODE (8 DIGITS)');
+        
+        const note1   = errDimRed('     🗲 ') + errGray.italic('Digitare esclusivamente l\'identificativo numerico (1 o 2).');
+        const note2   = errDimRed('     🗲 ') + errGray.italic('Inviare il comando [ENTER] per confermare la pipeline.');
+        const footer  = errDark('     >> Error-Bot OS Framework // Engine Core v2.5.8-Stable');
+
+        const prompt  = errGreen('\n ┌──(sys㉿error-bot)─[~/auth_gateway]') + 
+                        errGreen('\n └─$ ') + chalk.white('select_node') + errRed(' ❯ ');
 
         opzione = await question(`\n
-${a}
+${bTop}
+${line}
+${title}
+${line}
 
-          ${sm}
-${linea}
+${option1}
+${option2}
 
-${qr}
-${codice}
-
-${linea}
-${istruzioni.join('\n')}
-
-${b}
+${line}
+${note1}
+${note2}
+${footer}
+${line}
+${bBot}
 ${prompt}`);
 
         if (!/^[1-2]$/.test(opzione)) {
-            console.log(`\n${chalk.bgRed.white.bold(' ✖ INPUT NON VALIDO ')}
-
-${chalk.hex('#34495E')('   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')}
-${chalk.hex('#FF5E62').bold('⚠️  Sono ammessi solo i numeri')} ${chalk.bold.cyan('1')} ${chalk.hex('#FF5E62').bold('o')} ${chalk.bold.cyan('2')}
-${chalk.hex('#FF9966')('┌─⭓ Nessuna lettera o simbolo')}
-${chalk.hex('#FF9966')('└─⭓ Copia il numero dell\'opzione desiderata e incollalo')}
-${chalk.cyan.italic('\n✧ Suggerimento: Se hai dubbi, scrivi al creatore +393701330693')}
+            console.log(`\n${chalk.bgRed.black.bold(' ✖ [CRITICAL_INPUT_ERROR]: ACQUISIZIONE FALLITA ')}
+${errDark('—'.repeat(68))}
+${errRed(' ⚠️  Eccezione di runtime:')} ${errGray('Il terminale accetta esclusivamente i registri')} ${errCyan('1')} ${errGray('o')} ${errCyan('2')}
+${errDimRed(' ⤷ Target:')} ${errGray('Nessun simbolo, lettera o spazio vuoto consentito.')}
+${errDimRed(' ⤷ Debug Info:')} ${errGray('In caso di loop o crash di cifratura, Developer Dev: +393701330693')}
 `);
         }
     } while ((opzione !== '1' && opzione !== '2') || fs.existsSync(`./${authFile}/creds.json`));
@@ -233,7 +236,7 @@ const connectionOptions = {
             global.groupCache.set(jid, metadata, { ttl: 300 });
             return metadata;
         } catch (err) {
-            console.error('Errore nel recupero dei metadati del gruppo:', err);
+            console.error(chalk.redBright('[ERROR-BOT_ERR] Perdita allocazione memoria metadati del gruppo:'), err);
             return {};
         }
     },
@@ -243,7 +246,7 @@ const connectionOptions = {
             const msg = await global.store.loadMessage(jid, key.id);
             return msg?.message || undefined;
         } catch (error) {
-            console.error('Errore in getMessage:', error);
+            console.error(chalk.redBright('[ERROR-BOT_ERR] Ricezione interrotta nel metodo getMessage:'), error);
             return undefined;
         }
     },
@@ -263,14 +266,14 @@ if (!fs.existsSync(`./${authFile}/creds.json`)) {
             if (phoneNumber) {
                 addNumber = phoneNumber.replace(/[^0-9]/g, '');
             } else {
-                phoneNumber = await question(chalk.bgCyan(chalk.bold.black(` Inserisci il numero di WhatsApp. \n`)) + chalk.cyanBright(` Esempio: +393471234567\n`) + chalk.bold.cyan(' ━━► '));
+                phoneNumber = await question(chalk.bgRed(chalk.bold.black(` [INPUT_REQUIRED]: Inserisci l'host numerico di WhatsApp `)) + chalk.redBright(`\n Formato corretto: Internazionale (+393471234567)\n`) + chalk.bold.red(' ──► '));
                 addNumber = phoneNumber.replace(/\D/g, '');
                 if (!phoneNumber.startsWith('+')) phoneNumber = `+${phoneNumber}`;
             }
             setTimeout(async () => {
-                let codeBot = await conn.requestPairingCode(addNumber, 'BLOODBOT');
+                let codeBot = await conn.requestPairingCode(addNumber, 'ERRORBOT');
                 codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot;
-                console.log(chalk.bold.black(chalk.bgCyan(' 『 🔗 』– CODICE DI ABBINAMENTO: ')), chalk.bold.cyanBright(codeBot));
+                console.log(chalk.bold.black(chalk.bgRed(' 🧬 [ERROR-BOT]: PAIRING_CODE_GENERATED ')), chalk.bold.redBright(codeBot));
             }, 3000);
         }
     }
@@ -304,7 +307,7 @@ async function connectionUpdate(update) {
     }
     if (global.db.data == null) loadDatabase();
     if (qr && (opzione === '1' || methodCodeQR) && !global.qrGenerated) {
-        console.log(chalk.bold.cyan(`\n 🌀 SCANSIONA IL CODICE QR - SCADE TRA 45 SECONDI 🌀`));
+        console.log(chalk.bold.red(`\n 📡 [SYS_STREAM]: RENDERING QR MATRIX (VALIDITA: 45 SECONDI) 📡`));
         global.qrGenerated = true;
     }
     if (connection === 'open') {
@@ -312,25 +315,21 @@ async function connectionUpdate(update) {
         global.connectionMessagesPrinted = {};
         if (!global.isLogoPrinted) {
             const logoColors = [
-                '#00F2FE', '#00E3FE', '#00D4FE', '#00C5FE', '#00B6FE',
-                '#00A7FE', '#0098FE', '#0089FE', '#007AFE', '#006BFE', '#005CFE'
+                '#FF1E27', '#E61520', '#CC0C1A', '#B30313', '#99000D',
+                '#800007', '#660002', '#500000', '#FF1E27', '#E61520', '#CC0C1A', '#B30313', '#99000D'
             ];
-            const varebot = [
-               `██████╗ ██╗      ██████╗  ██████╗ ██████╗ `,
-    `██╔══██╗██║     ██╔═══██╗██╔═══██╗██╔══██╗`,
-    `██████╔╝██║     ██║   ██║██║   ██║██║  ██║`,
-    `██╔══██╗██║     ██║   ██║██║   ██║██║  ██║`,
-    `██████╔╝███████╗╚██████╔╝╚██████╔╝██████╔╝`,
-    `╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝ `,
-    `                                          `,
-    `         ██████╗  ██████╗ ████████╗       `,
-    `         ██╔══██╗██╔═══██╗╚══██╔══╝       `,
-    `         ██████╔╝██║   ██║   ██║          `,
-    `         ██╔══██╗██║   ██║   ██║          `,
-    `         ██████╔╝╚██████╔╝   ██║          `,
-    `         ╚═════╝  ╚═════╝    ╚═╝          `
+            const errorBotLogo = [
+               `███████╗██████╗ ██████╗  ██████╗ ██████╗       ██████╗  ██████╗ ████████╗`,
+               `██╔════╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗      ██╔══██╗██╔═══██╗╚══██╔══╝`,
+               `█████╗  ██████╔╝██████╔╝██║   ██║██████╔╝█████╗██████╔╝██║   ██║   ██║   `,
+               `██╔══╝  ██╔══██╗██╔══██╗██║   ██║██╔══██╗╚════╝██╔══██╗██║   ██║   ██║   `,
+               `███████╗██║  ██║██║  ██║╚██████╔╝██║  ██║      ██████╔╝╚██████╔╝   ██║   `,
+               `╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝      ╚═════╝  ╚═════╝    ╚═╝   `,
+               `                                                                         `,
+               `                [ KERNEL MAIN INJECTED SUCCESSFUL ]                     `,
+               `                [ BUILD STATUS: DEPLOYED CORRUPTED ]                     `
             ];
-            varebot.forEach((line, i) => {
+            errorBotLogo.forEach((line, i) => {
                 const color = logoColors[i] || logoColors[logoColors.length - 1];
                 console.log(chalk.hex(color).bold(line));
             });
@@ -343,47 +342,47 @@ async function connectionUpdate(update) {
     if (connection === 'close') {
         const reason = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.output?.payload?.statusCode;
         if (reason === DisconnectReason.badSession && !global.connectionMessagesPrinted.badSession) {
-            console.log(chalk.bold.redBright(`\n⚠️❗ SESSIONE NON VALIDA, ELIMINA LA CARTELLA ${global.authFile} E RIAVVIA ⚠️`));
+            console.log(chalk.bold.redBright(`\n🛑 [CRITICAL_EXCEPTION] CREDENZIALI CORROTTE. ELIMINARE LA CARTELLA ${global.authFile} E RE-INIZIALIZZARE IL PROCESSO.`));
             global.connectionMessagesPrinted.badSession = true;
             await global.reloadHandler(true).catch(console.error);
         } else if (reason === DisconnectReason.connectionLost && !global.connectionMessagesPrinted.connectionLost) {
-            console.log(chalk.bold.hex('#3498DB')(`\n╭⭑⭒━━━✦❘༻ 📡 CONNESSIONE PERSA ༺❘✦━━━⭒⭑\n┃ 🔄 RICONNESSIONE IN CORSO... \n╰⭑⭒━━━✦❘༻☾⋆₊✧ 𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙 ✧₊⁺⋆☽༺❘✦━━━⭒⭑`));
+            console.log(chalk.bold.hex('#FF5E5E')(`\n⚡📡 [SYS_STATUS]: CANALE DI TRASMISSIONE INTERROTTO \n🧬 RE-TRYING CONNECTION INJECTION... \n────────────────────────────────────`));
             global.connectionMessagesPrinted.connectionLost = true;
             await global.reloadHandler(true).catch(console.error);
         } else if (reason === DisconnectReason.connectionReplaced && !global.connectionMessagesPrinted.connectionReplaced) {
-            console.log(chalk.bold.hex('#F1C40F')(`╭⭑⭒━━━✦❘༻ ⚠️ CONNESSIONE SOSTITUITA ༺❘✦━━━⭒⭑\n┃ È stata aperta un'altra sessione. \n╰⭑⭒━━━✦❘༻☾⋆⁺₊✧ 𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙 ✧₊⁺⋆☽༺❘✦━━━⭒⭑`));
+            console.log(chalk.bold.hex('#D8006E')(`⚠️ [OVERLET_DETECTION]: SESSIONE DI ACCESSO SOSTITUITA\nUn altro socket host ha inviato pacchetti di sovrascrittura.\n────────────────────────────────────`));
             global.connectionMessagesPrinted.connectionReplaced = true;
         } else if (reason === DisconnectReason.loggedOut && !global.connectionMessagesPrinted.loggedOut) {
-            console.log(chalk.bold.redBright(`\n⚠️ DISCONNESSO. CARTELLA ${global.authFile} ELIMINATA. RIAVVIA IL BOT. ⚠️`));
+            console.log(chalk.bold.redBright(`\n🛑 [LOGGED_OUT]: SESSIONE TERMINATA DALL'HOST. RIMOZIONE RECURSIVA DI ${global.authFile}. RIAVVIARE.`));
             global.connectionMessagesPrinted.loggedOut = true;
             try {
                 if (fs.existsSync(global.authFile)) {
                     fs.rmSync(global.authFile, { recursive: true, force: true });
                 }
             } catch (e) {
-                console.error('Errore nell\'eliminazione della cartella sessione:', e);
+                console.error('Errore spurgo session directory:', e);
             }
             process.exit(1);
         } else if (reason === DisconnectReason.restartRequired && !global.connectionMessagesPrinted.restartRequired) {
-            console.log(chalk.bold.hex('#9B59B6')(`\n⭑⭒━━━✦❘༻ ✨ RIPRISTINO CONNESSIONE ༺❘✦━━━⭒⭑`));
+            console.log(chalk.bold.hex('#9A78FA')(`\n🔄 [SYS_EXEC]: RICHIESTO REBOOT PREVENTIVO DEL COMPILATORE`));
             global.connectionMessagesPrinted.restartRequired = true;
             await global.reloadHandler(true).catch(console.error);
         } else if (reason === DisconnectReason.timedOut && !global.connectionMessagesPrinted.timedOut) {
-            console.log(chalk.bold.hex('#E67E22')(`\n╭⭑⭒━━━✦❘༻ ⌛ TIMEOUT CONNESSIONE ༺❘✦━━━⭒⭑\n┃ 🔄 RICONNESSIONE IN CORSO...\n╰⭑⭒━━━✦❘༻☾⋆⁺₊✧ 𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙 ✧₊⁺⋆☽༺❘✦━━━⭒⭑`));
+            console.log(chalk.bold.hex('#FF9F43')(`\n⏳ [TIMEOUT_ERROR]: IL SOCKET NON RISPONDE. RIPRISTINO PIPELINE IN CORSO...\n────────────────────────────────────`));
             global.connectionMessagesPrinted.timedOut = true;
             await global.reloadHandler(true).catch(console.error);
         } else if (reason === 401) {
-            console.log(chalk.bold.redBright(`\n⚠️❗ ERRORE 401: RIAVVIA E RISCANSIONA IL QR ⚠️`));
+            console.log(chalk.bold.redBright(`\n⚠️ [AUTH_FAIL_401]: TOKEN SCADUTO. CANCELLAZIONE BUFFER E RICHIESTA NUOVO LOGIN.`));
             try {
                 if (fs.existsSync(global.authFile)) {
                     fs.rmSync(global.authFile, { recursive: true, force: true });
                 }
             } catch (e) {
-                console.error('Errore nell\'eliminazione della cartella sessione:', e);
+                console.error('Errore spurgo session directory:', e);
             }
             process.exit(1);
         } else if (reason !== DisconnectReason.restartRequired && reason !== DisconnectReason.connectionClosed && !global.connectionMessagesPrinted.unknown) {
-            console.log(chalk.bold.redBright(`\n⚠️ DISCONNESSIONE SCONOSCIUTA: ${reason || '???'} >> ${connection || '???'}`));
+            console.log(chalk.bold.redBright(`\n☣️ [UNKNOWN_CORE_ERR]: CODESYS_DUMP >> ${reason || '???'} // CON_STATE >> ${connection || '???'}`));
             global.connectionMessagesPrinted.unknown = true;
         }
     }
@@ -392,12 +391,12 @@ process.on('uncaughtException', console.error);
 async function connectSubBots() {
     const subBotDirectory = './varebot-sub';
     if (!existsSync(subBotDirectory)) {
-        console.log(chalk.bold.hex('#00D2FF')('💠 vare ✧ bot: Nessun Sub-Bot trovato.'));
+        console.log(chalk.bold.hex('#D8006E')('📋 [SUB-NODE_INFO]: Nessun record di sub-bot localizzato.'));
         try {
             mkdirSync(subBotDirectory, { recursive: true });
-            console.log(chalk.bold.green('✅ Directory creata.'));
+            console.log(chalk.bold.green('✅ Directory dei sub-nodi configurata strutturalmente.'));
         } catch (err) {
-            console.log(chalk.bold.red('❌ Errore:', err.message));
+            console.log(chalk.bold.red('❌ Errore allocazione fs:', err.message));
             return;
         }
         return;
@@ -407,7 +406,7 @@ async function connectSubBots() {
             statSync(join(subBotDirectory, file)).isDirectory()
         );
         if (subBotFolders.length === 0) {
-            console.log(chalk.bold.hex('#34495E')('- 🌑 | Nessun subbot collegato'));
+            console.log(chalk.bold.hex('#555555')('[-] Stato nodi paralleli: 0 moduli attivi.'));
             return;
         }
         const botPromises = subBotFolders.map(async (folder) => {
@@ -427,7 +426,7 @@ async function connectSubBots() {
                     subConn.ev.on('connection.update', connectionUpdate);
                     return subConn;
                 } catch (err) {
-                    console.log(chalk.bold.red(`❌ Errore Sub-Bot ${folder}:`, err.message));
+                    console.log(chalk.bold.red(`❌ Fallimento caricamento Sub-Bot [${folder}]:`, err.message));
                     return null;
                 }
             }
@@ -436,12 +435,12 @@ async function connectSubBots() {
         const bots = await Promise.all(botPromises);
         global.conns = bots.filter(Boolean);
         if (global.conns.length > 0) {
-            console.log(chalk.bold.hex('#00FFCC')(`💎 ${global.conns.length} Sub-Bot collegati correttamente.`));
+            console.log(chalk.bold.hex('#00FFCC')(`⚡ [ERROR-BOT Core]: Iniezione completata per ${global.conns.length} sub-nodi secondari.`));
         } else {
-            console.log(chalk.bold.yellow('⚠️ Nessun Sub-Bot attivo.'));
+            console.log(chalk.bold.yellow('⚠️ Nessuna estensione sub-bot allocata.'));
         }
     } catch (err) {
-        console.log(chalk.bold.red('❌ Errore Sub-Bot:', err.message));
+        console.log(chalk.bold.red('❌ Errore critico sub-routing process:', err.message));
     }
 }
 (async () => {
@@ -449,10 +448,10 @@ async function connectSubBots() {
     try {
         conn.ev.on('connection.update', connectionUpdate);
         conn.ev.on('creds.update', saveCreds);
-        console.log(chalk.bold.hex('#00F2FE')(`\n⭑⭒━━━✦❘༻☾⋆⁺₊✧ 𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙 ONLINE ✧₊⁺⋆☽༺❘✦━━━⭒⭑\n`));
+        console.log(chalk.bold.hex('#FF1E27')(`\n⚡ [SYSTEM_BOOT]: CORE INSTANCE ERROR-BOT INIZIALIZZATA CORE STATUS: SYSTEM_READY ⚡\n`));
         await connectSubBots();
     } catch (error) {
-        console.error(chalk.bold.bgRedBright(` 🥀 Errore Avvio: `, error));
+        console.error(chalk.bold.bgRedBright(` 🛑 FATAL BOOT FAULT: `, error));
     }
 })();
 let isInit = true;
@@ -507,18 +506,18 @@ global.reload = async (_ev, filename) => {
     if (pluginFilter(filename)) {
         const dir = global.__filename(join(pluginFolder, filename), true);
         if (filename in global.plugins) {
-            if (existsSync(dir)) conn.logger.info(chalk.hex('#2ECC71')(`✅ AGGIORNATO - '${filename}'`));
+            if (existsSync(dir)) conn.logger.info(chalk.hex('#00FFCC')(`💻 [COMPILER_HOT_RELOAD]: Successo compile su - '${filename}'`));
             else {
-                conn.logger.warn(chalk.hex('#E74C3C')(`🗑️ ELIMINATO: '${filename}'`));
+                conn.logger.warn(chalk.hex('#FF3333')(`🗑️ [COMPILER_PURGE]: Modulo rimosso dal disco: '${filename}'`));
                 return delete global.plugins[filename];
             }
-        } else conn.logger.info(chalk.hex('#3498DB')(`🆕 NUOVO PLUGIN: '${filename}'`));
+        } else conn.logger.info(chalk.hex('#D8006E')(`🆕 [COMPILER_REGISTER]: Individuata nuova risorsa: '${filename}'`));
 
         try {
             const module = (await import(`${global.__filename(dir)}?update=${Date.now()}`));
             global.plugins[filename] = module.default || module;
         } catch (e) {
-            conn.logger.error(chalk.red(`⚠️ ERRORE PLUGIN: '${filename}\n${format(e)}'`));
+            conn.logger.error(chalk.red(`⚠️ [COMPILATION_ERROR]: Eccezione nel modulo '${filename}'\n${format(e)}`));
         } finally {
             global.plugins = Object.fromEntries(Object.entries(global.plugins).sort(([a], [b]) => a.localeCompare(b)));
         }
@@ -573,14 +572,14 @@ function clearDirectory(dirPath) {
                 rmSync(filePath, { recursive: true, force: true });
             }
         } catch (e) {
-            console.error(chalk.red(`Errore pulizia ${filePath}:`, e));
+            console.error(chalk.red(`Errore spurgo file di cache ${filePath}:`, e));
         }
     });
 }
 function purgeSession(sessionDir, cleanPreKeys = false) {
     try {
         if (!existsSync(sessionDir)) {
-            console.log(chalk.bold.hex('#F1C40F')(`\n╭⭑⭒━━━✦❘༻ 🟡 DIRECTORY 🟡 ༺❘✦━━━⭒⭑\n┃  ⚠️  Sessione non trovata: ${sessionDir}\n╰⭑⭒━━━✦❘༻☾⋆₊✧ 𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙 ✧₊⁺⋆☽༺❘✦━━━⭒⭑`));
+            console.log(chalk.bold.hex('#FF9F43')(`\n⚡ [FS_NOTICE]: Directory di sessione non indicizzata: ${sessionDir}`));
             return;
         }
         const files = readdirSync(sessionDir);
@@ -602,7 +601,7 @@ function purgeSession(sessionDir, cleanPreKeys = false) {
                         preKeyDeletedCount++;
                         deletedCount++;
                     } catch (err) {
-                        console.log(chalk.bold.red(`\n❌ Errore Pre-Key: ${err.message}`));
+                        console.log(chalk.bold.red(`\n❌ [FS_ERR] Impossibile purgare chiave pre-key: ${err.message}`));
                     }
                 }
             } else if (!file.startsWith('pre-key')) {
@@ -614,25 +613,24 @@ function purgeSession(sessionDir, cleanPreKeys = false) {
                     }
                     deletedCount++;
                 } catch (err) {
-                    console.log(chalk.bold.red(`\n❌ Errore File: ${err.message}`));
+                    console.log(chalk.bold.red(`\n❌ [FS_ERR] Fallimento unlink su file di sessione volatile: ${err.message}`));
                 }
             }
         });
 
-        let message = chalk.bold.hex('#00D2FF')(`\n╭⭑⭒━━━✦❘༻ 💠 SESSIONE 💠 ༺❘✦━━━⭒⭑\n┃  ✅ ${deletedCount} file eliminati da ${sessionDir}`);
+        let message = chalk.bold.hex('#FF3333')(`\n🧹 [SYS_PURGE]: FILE SYSTEM DI SESSIONE OTTIMIZZATO\n⤷ Purgati: ${deletedCount} file temporanei in ${sessionDir}`);
         if (preKeyDeletedCount > 0) {
-            message += `\n┃  🔑 ${preKeyDeletedCount} chiavi obsolete rimosse`;
+            message += `\n⤷ Destrutturate: ${preKeyDeletedCount} chiavi d'accesso obsolete rimosse`;
         }
-        message += `\n╰⭑⭒━━━✦❘༻☾⋆⁺₊🗑️ 𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙 ♻️₊⁺⋆☽༺❘✦━━━⭒⭑`;
 
         if (deletedCount > 0) {
             console.log(message);
         } else {
-            console.log(chalk.bold.hex('#5D6D7E')(`\n╭⭑⭒━━━✦❘༻ ⚪ SESSIONE ⚪ ༺❘✦━━━⭒⭑\n┃  ℹ️  Nessun file da pulire in ${sessionDir}.\n╰⭑⭒━━━✦❘༻☾⋆⁺₊✧ 𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙 ✧₊⁺⋆☽༺❘✦━━━⭒⭑`));
+            console.log(chalk.bold.hex('#555555')(`\n⚙️ [SYS_PURGE]: Buffer ${sessionDir} già ottimizzato. Nessun elemento obsoleto intercettato.`));
         }
 
     } catch (dirErr) {
-        console.log(chalk.bold.red(`\n❌ Errore Directory: ${dirErr.message}`));
+        console.log(chalk.bold.red(`\n❌ [CRITICAL_FS_ERR]: Errore nell'ottimizzazione del cluster: ${dirErr.message}`));
     }
 }
 
@@ -640,7 +638,7 @@ setInterval(async () => {
     if (global.stopped === 'close' || !global.conn || !global.conn.user) return;
     clearDirectory(join(__dirname, 'tmp'));
     clearDirectory(join(__dirname, 'temp'));
-    console.log(chalk.bold.hex('#2ECC71')(`\n╭⭑⭒━━━✦❘༻ 🟢 PULIZIA MULTIMEDIA 🟢 ༺❘✦━━━⭒⭑\n┃          CACHE SVUOTATA\n╰⭑⭒━━━✦❘༻☾⋆⁺₊🗑️ 𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙 ♻️₊⁺⋆☽༺❘✦━━━⭒⭑`));
+    console.log(chalk.bold.hex('#00FFCC')(`\n⚙️ [GARBAGE_COLLECTOR]: Svuotamento buffer multimediale eseguito. RAM ottimizzata.`));
 }, 1000 * 60 * 60);
 
 setInterval(async () => {
@@ -655,7 +653,7 @@ setInterval(async () => {
 
 setInterval(async () => {
     if (global.stopped === 'close' || !global.conn || !global.conn.user) return;
-    console.log(chalk.bold.hex('#3498DB')(`\n╭⭑⭒━━━✦❘༻ 🔵 PULIZIA CHIAVI 🔵 ༺❘✦━━━⭒⭑\n┃  🔄 Rimozione pre-keys obsolete...\n╰⭑⭒━━━✦❘༻☾⋆⁺₊🧹 𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙 ♻️₊⁺⋆☽༺❘✦━━━⭒⭑`));
+    console.log(chalk.bold.hex('#D8006E')(`\n⚙️ [CRYPT_CLEANUP]: Ciclo automatico rimozione pre-keys sature...`));
     purgeSession(`./${global.authFile}`, true);
     const subBotDir = `./${global.authFileJB}`;
     if (existsSync(subBotDir)) {
@@ -668,7 +666,7 @@ _quickTest().then(() => conn.logger.info(chalk.bold.cyan(``)));
 
 let filePath = fileURLToPath(import.meta.url);
 const mainWatcher = watch(filePath, async () => {
-  console.log(chalk.bgCyan(chalk.black.bold(" File: 'main.js' AGGIORNATO ")))
+  console.log(chalk.bgRed(chalk.black.bold(" [ERROR-BOT KERNEL]: Rilevata modifica su 'main.js'. Esecuzione Hot-Swap in corso... ")))
   await global.reloadHandler(true).catch(console.error);
 });
 mainWatcher.setMaxListeners(20);
