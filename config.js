@@ -1,3 +1,4 @@
+
 import { watchFile, unwatchFile } from 'fs'
 import { fileURLToPath, pathToFileURL } from 'url'
 import chalk from 'chalk'
@@ -13,10 +14,10 @@ const moduleCache = new NodeCache({ stdTTL: 300 });
 
 /*⭑⭒━━━✦❘༻☾⋆⁺₊✧ 𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙✧₊⁺⋆☽༺❘✦━━━⭒⭑*/
 
-global.sam = ['393701330693'];
+global.sam = ['212614975433'];
 global.owner = [
-  ['393701330693', 'blood', true],
-  ['xxxxxxxxxxxx', 'xxxxx', true],
+  ['212614975433', 'valak', true],
+  ['12366638701', 'simba', true],
   ['xxxxxxxxxxxx', 'xxxxx', true],
   ['xxxxxxxxxxxx', 'xxxxx', true],
   ['xxxxxxxxxxxx', 'xxxxx', true],
@@ -28,14 +29,14 @@ global.prems = ['xxxxxxxxxxx', 'xxxxxxxxxxx', 'xxxxxxxxxxx']
 
 /*⭑⭒━━━✦❘༻🩸 INFO BOT 🕊️༺❘✦━━━⭒⭑*/
 
-global.nomepack = 'BLD-BLOOD'
-global.nomebot = 'BLD-BLOOD'
-global.wm = 'BLD-BLOOD'
-global.autore = 'BLOOD'
-global.dev = 'BLOOD'
-global.testobot = `BLD-BLOOD`
+global.nomepack = 'VALAK-BOT'
+global.nomebot = 'VALAK-BOT'
+global.wm = 'VALAK-BOT'
+global.autore = 'VALAK'
+global.dev = 'VALAK'
+global.testobot = `VALAK-BOT`
 global.versione = pkg.version
-global.errore = '*ERRORE INATTESO*, UTILIZZA IL COMANDO .segnala (errore) per contattare lo sviluppatore. contatto diretto:+39 370 133 0693'
+global.errore = '*ERRORE INATTESO*, UTILIZZA IL COMANDO .segnala (errore) per contattare lo sviluppatore. contatto diretto:+212 614-975433'
 
 /*⭑⭒━━━✦❘༻🌐 LINK 🌐༺❘✦━━━⭒⭑*/
 
@@ -86,7 +87,7 @@ global.multiplier = 1
 let filePath = fileURLToPath(import.meta.url)
 let fileUrl = pathToFileURL(filePath).href
 const reloadConfig = async () => {
-  unwatchFile(filePath)
+ unwatchFile(filePath)
   console.log(chalk.bgHex('#3b0d95')(chalk.white.bold("File: 'config.js' Aggiornato")))
   const module = await import(`${fileUrl}?update=${Date.now()}`)
   return module;
